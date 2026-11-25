@@ -8,11 +8,11 @@ const judul = "Latihan Vue: Daftar Alat Laboratorium";
 // 2. Data reaktif: tampilan otomatis berubah ketika nilainya berubah
 const kataKunci = ref("");
 const daftarAlat = ref([
-  { kode: "OPT-001", nama: "Mikroskop Binokuler", tersedia: 8, total: 10 },
-  { kode: "UKR-001", nama: "Timbangan Analitik", tersedia: 1, total: 3 },
-  { kode: "ELK-001", nama: "Multimeter Digital", tersedia: 17, total: 20 },
-  { kode: "PMN-002", nama: "Oven Laboratorium", tersedia: 0, total: 2 },
-]);
+  { kode: 'OPT-001', nama: 'Mikroskop Binokuler', tersedia: 8, total: 10, kondisi: 'baik' },
+  { kode: 'UKR-001', nama: 'Timbangan Analitik', tersedia: 1, total: 3, kondisi: 'baik' },
+  { kode: 'ELK-001', nama: 'Multimeter Digital', tersedia: 17, total: 20, kondisi: 'rusak_ringan' },
+  { kode: 'PMN-002', nama: 'Oven Laboratorium', tersedia: 0, total: 2, kondisi: 'rusak_berat' },
+])
 
 // 3. Computed: nilai turunan yang dihitung ulang otomatis
 const alatTampil = computed(() =>
@@ -28,6 +28,11 @@ const totalTersedia = computed(() =>
 function pinjam(kode) {
   const alat = daftarAlat.value.find((a) => a.kode === kode);
   if (alat && alat.tersedia > 0) alat.tersedia--;
+}
+
+function kembali(kode) {
+  const alat = daftarAlat.value.find((a) => a.kode === kode)
+  if (alat && alat.tersedia < alat.total) alat.tersedia++
 }
 </script>
 
@@ -47,6 +52,7 @@ function pinjam(kode) {
         :key="alat.kode"
         v-bind="alat"
         @pinjam="pinjam"
+        @kembali="kembali"
       />
     </div>
 
