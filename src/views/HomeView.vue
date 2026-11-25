@@ -1,12 +1,12 @@
 <script setup>
-import { computed, ref } from "vue";
-import KartuAlat from "@/components/latihan/KartuAlat.vue";
+import { computed, ref } from 'vue'
+import KartuAlat from '@/components/latihan/KartuAlat.vue'
 
 // 1. Data biasa (tidak reaktif)
-const judul = "Latihan Vue: Daftar Alat Laboratorium";
+const judul = 'Latihan Vue: Daftar Alat Laboratorium'
 
 // 2. Data reaktif: tampilan otomatis berubah ketika nilainya berubah
-const kataKunci = ref("");
+const kataKunci = ref('')
 const daftarAlat = ref([
   { kode: 'OPT-001', nama: 'Mikroskop Binokuler', tersedia: 8, total: 10, kondisi: 'baik' },
   { kode: 'UKR-001', nama: 'Timbangan Analitik', tersedia: 1, total: 3, kondisi: 'baik' },
@@ -19,15 +19,13 @@ const alatTampil = computed(() =>
   daftarAlat.value.filter((alat) =>
     alat.nama.toLowerCase().includes(kataKunci.value.toLowerCase()),
   ),
-);
-const totalTersedia = computed(() =>
-  daftarAlat.value.reduce((jumlah, a) => jumlah + a.tersedia, 0),
-);
+)
+const totalTersedia = computed(() => daftarAlat.value.reduce((jumlah, a) => jumlah + a.tersedia, 0))
 
 // 4. Fungsi: dipanggil ketika komponen anak mengirim event "pinjam"
 function pinjam(kode) {
-  const alat = daftarAlat.value.find((a) => a.kode === kode);
-  if (alat && alat.tersedia > 0) alat.tersedia--;
+  const alat = daftarAlat.value.find((a) => a.kode === kode)
+  if (alat && alat.tersedia > 0) alat.tersedia--
 }
 
 function kembali(kode) {
